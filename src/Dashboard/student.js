@@ -13,15 +13,16 @@ export default function Student() {
       try {
         setLoading(true);
         const username =localStorage.getItem('username');
-        const password = localStorage.getItem('password');
+        const token = localStorage.getItem('token');
 
-        if (!username || !password) {
+        if (!username || !token) {
           throw new Error('No credentials found.Please log in');
         }
 
         const response = await axios.get('/api/student/dashboard', {
           headers: {
-            Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+            Authorization: `Bearer ${token}`,
+
           },
         });
         
@@ -34,7 +35,7 @@ export default function Student() {
         setLoading(false);
         if (error.repsone?.status ===401){
           localStorage.clear()
-          navigate('/login');
+           navigate('/login');
         }
       }
     };

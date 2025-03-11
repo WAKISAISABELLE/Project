@@ -20,27 +20,33 @@ export default function LoginPage() {
         password,
       });
 
-      if (response.data.role === 'admin'){
-        localStorage.setItem('userRole', 'admin');
+      if (response.data && response.data.role){
+        localStorage.setItem('userRole', response.data.role);
         localStorage.setItem('username', username);
         localStorage.setItem('password', password);
-        navigate('/admin');
-      }else if (response.data.role === 'student'){
-        localStorage.setItem('userRole', 'student');
-        localStorage.setItem('username', username);
-        localStorage.setItem('password', password);
-        navigate('/student');
-      }else if (response.data.role === 'president'){
-        localStorage.setItem('userRole', 'president');
-        localStorage.setItem('username', username);
-        localStorage.setItem('password', password);
-        navigate('/president');
+
+        switch (response.data.role){
+          case "admin":
+            navigate("/admin")
+            break
+          case "student":
+            navigate("/student")
+            break
+          case "president":
+            navigate("/president")
+            break
+          default:
+            setError("Unkonw user role")
+        }
+      }else{
+        setError("Invalid")
       }
-    } catch (error){
-      setError('Invalid username or password');
-      console.error('Error logging in:', error);
+    }catch(error){
+      console.error("Error", error)
+      setError(error.response?.data?.message|| "Invalid username" )
     }
-  };
+  }
+       
 
   
   return (
