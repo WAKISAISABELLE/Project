@@ -2,7 +2,7 @@ import apiClient from './config';
 
 
 //fetch admin data
-export const getAdminDashboard =async (username, password) => {
+export const getAdminDashboard =async (email, password) => {
     try {
         const res = await apiClient.get('/api/admin/dashboard', {
             headers:{
@@ -22,7 +22,7 @@ export const updateEvent = async (eventData, eventID) => {
     try{
         const response = await apiClient.put(`/api/admin/events/${eventID}`, eventData,{
             headers:{
-                Authorization:`Basic ${btoa('irene:1101')}`,
+                Authorization:`Basic ${btoa('irene@example.com:1101')}`,
             },
         });
         return response.data;
@@ -40,7 +40,7 @@ export const deleteEvent = async (eventId) => {
     try {
       const response = await apiClient.delete(`/api/admin/events/${eventId}`, {
         headers: {
-          Authorization: `Basic ${btoa('irene:1101')}`, // Use admin credentials
+          Authorization: `Basic ${btoa('irene@example.com:1101')}`, // Use admin credentials
         },
       });
       return response.data;
@@ -57,7 +57,7 @@ export const deleteUser = async (userId) => {
     try {
         const response = await apiClient.delete(`/api/admin/users/${userId}`, {
             headers: {
-                Authorization: `Basic ${btoa('irene:1101')}`,
+                Authorization: `Basic ${btoa('irene@example.com:1101')}`,
             },
         });
         return response.data;
@@ -74,7 +74,7 @@ export const updateChapter = async (chapterId, chapterData) => {
     try {
       const response = await apiClient.put(`/api/admin/chapters/${chapterId}`, chapterData, {
         headers: {
-          Authorization: `Basic ${btoa('irene:1101')}`, // Use admin credentials
+          Authorization: `Basic ${btoa('irene@example.com:1101')}`, // Use admin credentials
         },
       });
       return response.data;
@@ -88,7 +88,7 @@ export const updateChapter = async (chapterId, chapterData) => {
     try {
       const response = await apiClient.delete(`/api/admin/chapters/${chapterId}`, {
         headers: {
-          Authorization: `Basic ${btoa('irene:1101')}`, // Use admin credentials
+          Authorization: `Basic ${btoa('irene@example.com:1101')}`, // Use admin credentials
         },
       });
       return response.data;

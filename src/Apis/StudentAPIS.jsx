@@ -1,10 +1,10 @@
 import apiClient from './config';
 
-export const getStudentDashboard = async (username, password) => {
+export const getStudentDashboard = async (email, password) => {
   try {
     const response = await apiClient.get('/api/student/dashboard', {
       headers: {
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        Authorization: `Basic ${btoa(`${email}:${password}`)}`,
       },
     });
     return response.data;

@@ -1,22 +1,40 @@
 import React, { useState } from 'react';
 import './signup.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async(e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    // Add your signup logic here
-    alert('Signup successful');
-  };
+    try {
+      const response = await axios.post('/api/signup',{
+        username: email,
+        password,
+        role: 'student'
+      });
+
+      if (response.status ===201){
+        alert('Signup successful');
+        navigate ('/login');
+      }
+    } catch (error){
+      setError('Error during signup.')
+      console.error('Error during signup', error)
+      }
+    };
+   
+ 
 
   return (
     <div className="container mt-5">

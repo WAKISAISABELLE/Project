@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getStudentDashboard} from '../Apis/StudentAPIS';
+import axios from 'axios';
 import './student.css';
 
 export default function Student() {
@@ -12,15 +12,30 @@ export default function Student() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getStudentDashboard('priscilla', '2222');
-        setDashboardData(data);
+        const username =localStorage.getItem('username');
+        const password = localStorage.getItem('password');
+
+        if (!username || !password) {
+          throw new Error('No credentials found.Please log in');
+        }
+
+        const response = await axios.get('/api/student/dashboard', {
+          headers: {
+            Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          },
+        });
+        
+        setDashboardData(response.data);
         setLoading(false);
-        setDashboardData(data);
+        
       } catch (error) {
         console.error('Error fetching student dashboard:', error);
         setError('Failed to load dashboard. Please try again.');
         setLoading(false);
-        // navigate('/login');
+        if (error.repsone?.status ===401){
+          localStorage.clear()
+          navigate('/login');
+        }
       }
     };
     fetchData();

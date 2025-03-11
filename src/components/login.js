@@ -1,35 +1,61 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
-    // Add your login logic here
-    if (email === 'admin@example.com' && password === 'password') {
-      alert('Login successful');
-    } else {
-      setError('Invalid email or password');
+    setError('');
+    
+    try{
+      const response = await axios.post('/api/login', {
+        username,
+        password,
+      });
+
+      if (response.data.role === 'admin'){
+        localStorage.setItem('userRole', 'admin');
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+        navigate('/admin');
+      }else if (response.data.role === 'student'){
+        localStorage.setItem('userRole', 'student');
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+        navigate('/student');
+      }else if (response.data.role === 'president'){
+        localStorage.setItem('userRole', 'president');
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+        navigate('/president');
+      }
+    } catch (error){
+      setError('Invalid username or password');
+      console.error('Error logging in:', error);
     }
   };
 
+  
   return (
     <div className="container mt-5">
       <h2 className="text-center">Login</h2>
       {error && <div className="alert alert-danger" role="alert">{error}</div>}
       <form onSubmit={handleLogin}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
+          <label htmlFor="username" className="form-label">Username</label>
           <input
-            type="email"
+            type="text"
             className="form-control"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
