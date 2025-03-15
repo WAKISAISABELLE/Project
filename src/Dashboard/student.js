@@ -6,7 +6,7 @@ import './student.css';
 export default function Student() {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,15 +63,15 @@ export default function Student() {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (error) {
-    return (
-      <div className="error-container">
-        <h2>Error</h2>
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()}>Try Again</button>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="error-container">
+  //       <h2>Error</h2>
+  //       <p>{error}</p>
+  //       <button onClick={() => window.location.reload()}>Try Again</button>
+  //     </div>
+  //   );
+  // }
   if (!dashboardData) {
     return (
       <div className="empty-container">

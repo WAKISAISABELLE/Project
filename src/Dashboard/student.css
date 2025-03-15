@@ -56,8 +56,8 @@
     max-width:1200px;
     margin:0 auto;
     display:block;
-    /* flex-direction: column;
-    align-items: stretch; */
+    flex-direction: column;
+    align-items: stretch; 
     
 }
 
@@ -78,8 +78,7 @@
 .dashboard-cards {
     display: flex;
     gap: 20px;
-    width:100%;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 3fr));
     justify-content: space-between;
     flex-direction: row;
   }
@@ -92,7 +91,25 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
-  
+  .cards-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card {
+  flex: 1;
+  min-width: 200px; 
+  max-width: 300px;
+  height: auto;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
   .card-value {
     font-size: 2rem;
     font-weight: bold;
@@ -120,6 +137,14 @@
 .horizontal-sections .content-section{
     flex:1;
 }
+.upcoming-events, .chapters, .events-calendar, .notifications {
+    width: 100%;
+    padding: 1rem;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
   
 .section-title {
     font-size: 1.5rem;
@@ -236,16 +261,19 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
+    width:100%;
   }
   
   .calendar-weekdays div {
     text-align: center;
     font-weight: bold;
     padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
   }
   .calendar-weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+   
     width: 100%;
   }
   .calendar-days {

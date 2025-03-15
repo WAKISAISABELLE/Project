@@ -1,6 +1,6 @@
-.admin-dashboard {
+ .admin-dashboard {
     min-height: 100vh;
-    background: white;
+    background:white;
     display: flex;
     font-family: Arial, Helvetica, sans-serif;
   }
@@ -8,196 +8,265 @@
   /* sidebar */
   .sidebar {
     width: 250px;
+    min-width: 200px;;
     background-color: black;
     color: white;
     height: 100vh;
-  
+    position: fixed;
     top: 0;
-    left: -250px;
+    left: 0;
     transition: left 0.3s ease;
     z-index: 200;
   }
-  
-  .sidebar-checkbox {
-    display: none;
+  .sidebar h2 {
+    margin: 0 0 30px 0;
+    font-size: 24px;
   }
   
-  .sidebar-checkbox:checked + .sidebar {
-    left: 0;
+  .sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
   
-  .sidebar-toggle {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 300;
-    background: #2c3e50;
+  .sidebar button {
+    background: none;
+    border: none;
     color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-  }
-  
-  .sidebar-header {
-    padding: 15px;
-    border-bottom: 1px solid #34495e;
-  }
-  
-  .sidebar-menu {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar-menu li {
-    padding: 15px 20px;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     transition: background-color 0.3s;
   }
-  
-  .sidebar-menu li:hover {
+  .sidebar button:hover {
     background-color: #34495e;
   }
-  
-  .sidebar-menu li a {
-    color: white;
-    text-decoration: none;
+  .main-content {
+    margin-left: 250px;
+    flex: 1;
+    padding: 20px;
   }
+  .sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    color: #2c3e50;
+  }
+  
   
   /* dashboard */
-  .dashboard-content {
-    margin-left: 250px;
-    padding: 20px;
-    width: calc(100% - 250px);
-    text-align: center;
-  }
-  
-  .dashboard-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 40px;
-    gap: 20px;
-  }
-  
-  .dashboard-card {
-    background-color: black;
+  .dashboard{
+    background: white;
+    padding:20px;
     border-radius: 8px;
-    padding: 40px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    text-align: center;
-    color: white;
-  }
-  
-  .card-value {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .dashboard-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* content */
-  .section-title {
-    font-size: 20px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   
   }
-  
-  .event-actions {
+  .charts-container {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    justify-content: center;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
   
-  .edit-button {
-    background-color: #3498db;
-    color: white;
+  .chart-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 30%;
+    min-width: 250px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
-  .edit-button:hover {
-    background-color: #2980b9;
+  .chart-wrapper {
+    height: 200px;
+    position: relative;
   }
   
-  .delete-button {
-    background-color: #e74c3c;
-    color: white;
+  .management-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
-  .delete-button:hover {
-    background-color: #c0392b;
+  h1 {
+    margin: 0 0 20px 0;
   }
   
-  .user-button {
-    background-color: #2ecc71;
-    color: white;
+  h2 {
+    margin: 0 0 15px 0;
   }
   
-  @media (max-width: 768px) {
-    /* Collapse sidebar on mobile */
-    .sidebar {
-      transform: translateX(-250px); /* Hidden by default */
-    }
-  
-    .sidebar.open {
-      transform: translateX(0); /* Show when open */
-    }
-  
-    .sidebar-checkbox:checked + .sidebar {
-      transform: translateX(0);
-    }
-  
-    /* Stack dashboard cards vertically on smaller screens */
-    .dashboard-cards {
-      flex-direction: column;
-    }
-  
-    .dashboard-card {
-      width: 100%;
-    }
-  
-    /* Add hamburger menu (you'll need to add a toggle in JSX) */
-    .hamburger {
-      display: block;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: white;
-      padding: 10px;
-    }
+  h3 {
+    margin: 0 0 15px 0;
+    text-align: center;
   }
-  
-  @media (max-width: 480px) {
-    .welcome-section h1 {
-      font-size: 1.5rem;
-    }
-  
-    .welcome-section p {
-      font-size: 0.9rem;
-    }
-  
-    .card-value {
-      font-size: 1.5rem;
-    }
-  
-    .dashboard-card {
-      padding: 15px;
-    }
+
+  /* management */
+
+  /* Add to existing AdminDashboard.css */
+.management-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.management-form input,
+.management-form select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.management-form button {
+  padding: 8px 16px;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.management-form button:hover {
+  background-color: #34495e;
+}
+
+.management-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.management-table th,
+.management-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.management-table th {
+  background-color: #f0f0f0;
+}
+
+.management-table td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  color: #2c3e50;
+}
+
+.management-table td button:hover {
+  color: #34495e;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
   }
-  
-  /* Hide hamburger on desktop */
-  @media (min-width: 769px) {
-    .hamburger {
-      display: none;
-    }
+
+  .main-content {
+    margin-left: 200px;
   }
-  
-  .event-actions,
-  .edit-actions {
+
+  .chart-card {
+    width: 45%; /* Two charts per row */
+    min-width: 200px;
+  }
+
+  .management-form input,
+  .management-form select {
+    min-width: 120px;
+    padding: 6px;
+  }
+
+  .management-form button {
+    padding: 6px 12px;
+  }
+
+  .management-table th,
+  .management-table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .sidebar-toggle {
+    display: block;
+    position: sticky;
+    top: 10px;
+    left: 10px;
+    z-index: 1001;
+  }
+  .chart-card {
+    width: 100%; /* Stack charts vertically */
+    min-width: 100%;
+  }
+
+  .chart-wrapper {
+    height: 150px; /* Smaller charts on mobile */
+  }
+
+  .management-form {
     flex-direction: column;
-    gap: 8px;
   }
+
+  .management-form input,
+  .management-form select {
+    min-width: 100%;
+    padding: 8px;
+  }
+  .management-form button {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .management-table th,
+  .management-table td {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .management-table td button {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+}
+  
+  
   
