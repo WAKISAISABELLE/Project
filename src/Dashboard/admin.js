@@ -34,7 +34,6 @@ export default function Admin() {
 
     return (
         <div className="admin-dashboard">
-            <input type="checkbox" id="sidebar-toggle" className="sidebar-checkbox" />
             <div className="sidebar">
                 <label htmlFor="sidebar-toggle" className="sidebar-toggle">Ξ</label>
                 <div className="sidebar-header">
