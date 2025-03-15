@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 // import axios from 'axios';
 import './student.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 export default function Student() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -87,6 +90,7 @@ export default function Student() {
       </div>
     );
   }
+  // handling the dropdowns
   const { myChapters, upcomingEvents, stats } = dashboardData;
   const handleProfileClick = () => {
     console.log('Profile clicked, current state:', profileOpen);
@@ -101,6 +105,12 @@ export default function Student() {
   const handleNotificationsClick = () => {
     console.log('Notifications clicked, current state:', notificationsOpen);
     setNotificationsOpen(!notificationsOpen);
+  };
+
+  // handling the calendar
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+    console.log('Selected date:', newDate); 
   };
 
   return (
@@ -195,9 +205,15 @@ export default function Student() {
 
       <div className="calendar-section">
         <h2>Calendar</h2>
-        <div className="calendar-placeholder">
-          {/* In a real app, you'd integrate a calendar component here */}
-          <p>Calendar component would go here</p>
+        <div className="calendar-container">
+          <Calendar 
+            onChange={handleDateChange}
+            value={date}
+            titleClassName={({date})=> {
+            const eventDates = upcomingEvents.map(e => new Date(e.date).toDateString());
+            return eventDates.includes(date.toDateString()) ? 'event-date':null;
+          }}
+          />
         </div>
       </div>
     </div>
