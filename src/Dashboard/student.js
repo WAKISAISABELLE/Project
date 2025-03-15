@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import axios from 'axios';
 import './student.css';
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 export default function Student() {
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -50,11 +54,13 @@ export default function Student() {
         { id: 1, title: "React Workshop", date: "Mar 20", time: "10:00 AM", location: "Room 101" },
         { id: 2, title: "AI Meetup", date: "Mar 22", time: "2:00 PM", location: "Lab B" },
       ],
-      notifications: [
-        { id: 1, message: "New event added!", time: "2 hours ago" },
-        { id: 2, message: "Chapter meeting tomorrow", time: "1 day ago" },
+      stats: [
+        {enrolledChapters: 3, },
+        { chapterEvents: 5,   },
+        {notifications:2},
       ],
     };
+    
     setDashboardData(mockData);
         setLoading(false);
 
@@ -81,183 +87,122 @@ export default function Student() {
       </div>
     );
   }
-  const { myChapters, upcomingEvents, notifications } = dashboardData;
+  const { myChapters, upcomingEvents, stats } = dashboardData;
+  const handleProfileClick = () => {
+    console.log('Profile clicked, current state:', profileOpen);
+    setProfileOpen(!profileOpen);
+  };
+
+  const handleSettingsClick = () => {
+    console.log('Settings clicked, current state:', settingsOpen);
+    setSettingsOpen(!settingsOpen);
+  };
+
+  const handleNotificationsClick = () => {
+    console.log('Notifications clicked, current state:', notificationsOpen);
+    setNotificationsOpen(!notificationsOpen);
+  };
 
   return (
     <div className="student-dashboard">
-      <nav className="top-navbar">
-        <div className="nav-logo">
+      <nav className="navbar">
+        <div className="nav-brand">
           {/* <link href ="/"><div className ="logo">CS</div></link> */}
           <span>CS Chapter Hub</span>
         </div>
 
         <div className="nav-icons">
-          <div className="nav-icon" title="Notifications">
-            <i className="icon-bell">🔔</i>
-            <span className="notification-badge">3</span>
+          <div className="dropdown">
+          <i className="fas fa-user" onClick={handleProfileClick}></i>
+            {profileOpen && (
+              <div className="dropdown-menu">
+                <button onClick={() => console.log('View Profile')}>View Profile</button>
+                <button onClick={() => console.log('Edit Profile')}>Edit Profile</button>
+                <button onClick={() => console.log('Logout')}>Logout</button>
+              </div>
+            )}
           </div>
-          <div className="nav-icon" title="Settings">
-            <i className="icon-settings">⚙️</i>
+
+          <div className="dropdown">
+            <i className="fas fa-cog" onClick={handleSettingsClick}></i>
+            {settingsOpen && (
+              <div className="dropdown-menu">
+                <button onClick={() => console.log('Account Settings')}>Account Settings</button>
+                <button onClick={() => console.log('Privacy')}>Privacy</button>
+                <button onClick={() => console.log('Preferences')}>Preferences</button>
+              </div>
+            )}
           </div>
-          <div className="nav-icon profile-icon" title="Profile">
-            <i className="icon-user">🧚‍♀️</i>
+
+          <div className="dropdown">
+            <i className="fas fa-bell" onClick={handleNotificationsClick}></i>
+            {notificationsOpen && (
+              <div className="dropdown-menu">
+                <button onClick={() => console.log('New Event')}>New Event</button>
+                <button onClick={() => console.log('Chapter Update')}>Chapter Update</button>
+              </div>
+            )}
           </div>
         </div>
       </nav>
-
-      {/* main content */}
-      <div className="dashboard-content">
-        <div className="welcome-section">
-          <h1>Welcome, Student!</h1>
-          <p>Here's what's happening in your chapters</p>
+      {/* dashboard cards */}
+      <div className="stats-cards">
+        <div className="card">
+          <h3>Enrolled Chapters</h3>
+          <p>{stats.enrolledChapters}</p>
         </div>
+        <div className="card">
+          <h3>Chapter Events</h3>
+          <p>{stats.chapterEvents}</p>
+        </div>
+        <div className="card">
+          <h3>Notifications</h3>
+          <p>{stats.notifications}</p>
+        </div>
+      </div>
 
-        {/* Dashboard stats */}
-        <div className="dashboard-cards">
-          <div className="dashboard-card">
-            <h3>My chapters</h3>
-            <div className="card-value">{myChapters.length}</div>
-            <p>Active Memberships</p>
-          </div>
-          <div className="dashboard-card">
-            <h3>My chapters Events</h3>
-            <div className="card-value">{upcomingEvents.length}</div>
-            <p>In the next 30 days.</p>
-          </div>
-          <div className="dashboard-card">
-            <h3>Notifications</h3>
-            <div className="card-value">{notifications.length}</div>
-          </div>
 
-          {/* Events */}
-          <div className="content-section">
-            <h2 className="section-title">Upcoming Events</h2>
-            <div className="events-list">
-              {upcomingEvents.map((event) => (
-                <div className="event-item" key={event.id}>
-                  <div className="event-date">
-                    <span>{event.date} Date</span>
-                    <span>{event.time}</span>
-                  </div>
-                  <div className="event-details">
-                    <h3>{event.title}</h3>
-                    <p>
-                      {event.time} • {event.location}
-                    </p>
-                  </div>
-                  <button className="event-button">View</button>
-                </div>
-              ))}
+      {/* upcoming events */}
+
+      <div className="upcoming-events">
+        <h2>Upcoming Events</h2>
+        {upcomingEvents.map(event => (
+          <div key={event.id} className="event-item">
+            <div>
+              <h4>{event.title}</h4>
+              <p>{event.date}</p>
             </div>
+            <button className="view-btn">View Details</button>
           </div>
+        ))}
+      </div>
 
-          {/* Chapters Section */}
-          <div className="horizontal-section">
-            <div className="content-section">
-              <h2 className="section-title">My Chapters</h2>
-              <div className="my-chapters-list">
-                {myChapters.map((chapter) => (
-                  <div className="chapter-item" key={chapter.id}>
-                    <h3>{chapter.name}</h3>
-                    <div className="chapter-details">
-                      <span className="chapter-role">{chapter.role || 'Member'}</span>
-                      <span className="chapter-events">{chapter.events} upcoming events</span>
-                    </div>
-                    <button className="chapter-view-button">View Details</button>
-                  </div>
-                ))}
-              </div>
+      {/* My chapters */}
+      <div className="my-chapters">
+        <h2>My Chapters</h2>
+        <div className="chapters-grid">
+          {myChapters.map(chapter => (
+            <div key={chapter.id} className="chapter-card">
+              <h3>{chapter.name}</h3>
+              <p>{chapter.members} Members</p>
+              <button className="view-btn">View Details</button>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* Calendar Section */}
-            <div className="content-section">
-              <h2 className="section-title">Events Calendar</h2>
-              <div className="calendar-container">
-                <div className="calendar-header">
-                  <button className="calendar-nav-button">◀</button>
-                  <h3>June 2023</h3>
-                  <button className="calendar-nav-button">▶</button>
-                </div>
-                <div className="calendar-grid">
-                  <div className="calendar-weekdays">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                  </div>
-                  <div className="calendar-days">
-                    {/* First row */}
-                    <div className="calendar-day prev-month">28</div>
-                    <div className="calendar-day prev-month">29</div>
-                    <div className="calendar-day prev-month">30</div>
-                    <div className="calendar-day prev-month">31</div>
-                    <div className="calendar-day">1</div>
-                    <div className="calendar-day">2</div>
-                    <div className="calendar-day">3</div>
+      {/* Calendar */}
 
-                    {/* Second row */}
-                    <div className="calendar-day">4</div>
-                    <div className="calendar-day">5</div>
-                    <div className="calendar-day">6</div>
-                    <div className="calendar-day">7</div>
-                    <div className="calendar-day">8</div>
-                    <div className="calendar-day">9</div>
-                    <div className="calendar-day">10</div>
-
-                    {/* Third row */}
-                    <div className="calendar-day">11</div>
-                    <div className="calendar-day">12</div>
-                    <div className="calendar-day">13</div>
-                    <div className="calendar-day">14</div>
-                    <div className="calendar-day has-event">15</div>
-                    <div className="calendar-day">16</div>
-                    <div className="calendar-day">17</div>
-
-                    {/* Fourth row */}
-                    <div className="calendar-day">18</div>
-                    <div className="calendar-day">19</div>
-                    <div className="calendar-day has-event">20</div>
-                    <div className="calendar-day">21</div>
-                    <div className="calendar-day">22</div>
-                    <div className="calendar-day">23</div>
-                    <div className="calendar-day">24</div>
-
-                    {/* Fifth row */}
-                    <div className="calendar-day has-event">25</div>
-                    <div className="calendar-day">26</div>
-                    <div className="calendar-day">27</div>
-                    <div className="calendar-day">28</div>
-                    <div className="calendar-day">29</div>
-                    <div className="calendar-day">30</div>
-                    <div className="calendar-day next-month">1</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Notifications Section */}
-              <div className="content-section">
-                <h2 className="section-title">Recent Notifications</h2>
-                <div className="notifications-list">
-                  {notifications.map((notification) => (
-                    <div className="notification-item" key={notification.id}>
-                      <div className="notification-icon">📣</div>
-                      <div className="notification-details">
-                        <p>{notification.message}</p>
-                        <span className="notification-time">{notification.time}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="calendar-section">
+        <h2>Calendar</h2>
+        <div className="calendar-placeholder">
+          {/* In a real app, you'd integrate a calendar component here */}
+          <p>Calendar component would go here</p>
         </div>
       </div>
     </div>
   );
-}
-    
+};
 
+          
+                    
