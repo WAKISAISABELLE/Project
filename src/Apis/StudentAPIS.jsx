@@ -1,15 +1,6 @@
-// import apiClient from './config';
+import { api, handleApiCall } from './config';
 
-// export const getStudentDashboard = async (email, password) => {
-//   try {
-//     const response = await apiClient.get('/api/student/dashboard', {
-//       headers: {
-//         Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching student dashboard:', error);
-//     throw error;
-//   }
-// };
+// Fetch student dashboard data
+export const getStudentDashboard = async () => {
+  return handleApiCall(() => api.get('/student/dashboard'));
+};

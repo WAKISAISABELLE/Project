@@ -1,99 +1,36 @@
-// import apiClient from './config';
+import { api, handleApiCall } from './config';
 
+// Fetch admin dashboard data
+export const getAdminDashboard = async () => {
+  return handleApiCall(() => api.get('/admin/dashboard'));
+};
 
-// //fetch admin data
-// export const getAdminDashboard =async (email, password) => {
-//     try {
-//         const res = await apiClient.get('/api/admin/dashboard', {
-//             headers:{
-//                 Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-//             },
-//         });
-//         return res.data;
+// Add a new chapter
+export const addChapter = async (chapterData) => {
+  return handleApiCall(() => api.post('/admin/chapters', chapterData));
+};
 
-//     }catch(error){
-//         console.error('Error fetching data:', error);
-//         throw error;
-//     }
-// };
+// Delete a chapter
+export const deleteChapter = async (chapterId) => {
+  return handleApiCall(() => api.delete(`/admin/chapters/${chapterId}`));
+};
 
-// //adding a new event
-// export const updateEvent = async (eventData, eventID) => {
-//     try{
-//         const response = await apiClient.put(`/api/admin/events/${eventID}`, eventData,{
-//             headers:{
-//                 Authorization:`Basic ${btoa('irene@example.com:1101')}`,
-//             },
-//         });
-//         return response.data;
-//     }catch (error){
-//         console.error('Error adding event:', error);
-//         throw error;
-//     }
-// };
+// Add a new event
+export const addEvent = async (eventData) => {
+  return handleApiCall(() => api.post('/admin/events', eventData));
+};
 
+// Delete an event
+export const deleteEvent = async (eventId) => {
+  return handleApiCall(() => api.delete(`/admin/events/${eventId}`));
+};
 
-// //delete an event
+// Add a new user
+export const addUser = async (userData) => {
+  return handleApiCall(() => api.post('/admin/users', userData));
+};
 
-
-// export const deleteEvent = async (eventId) => {
-//     try {
-//       const response = await apiClient.delete(`/api/admin/events/${eventId}`, {
-//         headers: {
-//           Authorization: `Basic ${btoa('irene@example.com:1101')}`, // Use admin credentials
-//         },
-//       });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error deleting event:', error);
-//       throw error;
-//     }
-//   };
-
-
-// //delete a user
-
-// export const deleteUser = async (userId) => {
-//     try {
-//         const response = await apiClient.delete(`/api/admin/users/${userId}`, {
-//             headers: {
-//                 Authorization: `Basic ${btoa('irene@example.com:1101')}`,
-//             },
-//         });
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error deleting user:', error);
-//         throw error;
-//     }
-// };
-
-// //chapter management
-
-
-// export const updateChapter = async (chapterId, chapterData) => {
-//     try {
-//       const response = await apiClient.put(`/api/admin/chapters/${chapterId}`, chapterData, {
-//         headers: {
-//           Authorization: `Basic ${btoa('irene@example.com:1101')}`, // Use admin credentials
-//         },
-//       });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error updating chapter:', error);
-//       throw error;
-//     }
-//   };
-  
-//   export const deleteChapter = async (chapterId) => {
-//     try {
-//       const response = await apiClient.delete(`/api/admin/chapters/${chapterId}`, {
-//         headers: {
-//           Authorization: `Basic ${btoa('irene@example.com:1101')}`, // Use admin credentials
-//         },
-//       });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error deleting chapter:', error);
-//       throw error;
-//     }
-//   };
+// Delete a user
+export const deleteUser = async (userId) => {
+  return handleApiCall(() => api.delete(`/admin/users/${userId}`));
+};

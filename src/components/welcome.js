@@ -68,7 +68,7 @@ export default function Welcome() {
         </nav>
         <div className='auth-buttons'>
           <Link to='/login' className='button button-login'>Log in</Link>
-          <Link to='/signup' className='button button-signup'>Sign up</Link>
+          {/* <Link to='/signup' className='button button-signup'>Sign up</Link> */}
         </div>
       </header>
 
